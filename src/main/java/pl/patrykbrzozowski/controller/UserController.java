@@ -39,7 +39,7 @@ public class UserController {
             }
 
             if(user!=null) {
-                return "redirect:login";
+                return "redirect:/";
             }
         }
         return "register";

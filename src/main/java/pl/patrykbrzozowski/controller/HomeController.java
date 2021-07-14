@@ -11,11 +11,6 @@ public class HomeController {
     @GetMapping("/")
     public String welcome() { return "welcome"; }
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String login() {
-        return "login";
-    }
-
     @GetMapping("/home")
     public String home() { return "home"; }
 }
