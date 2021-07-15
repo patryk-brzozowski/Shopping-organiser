@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
@@ -14,8 +15,8 @@ public class RegisterDto {
     private String userName;
     @NotNull
     private String email;
-    @Min(6)
+    @Size(min = 6)
     private String password;
-    @Min(6)
+    @Size(min = 6)
     private String confirm_password;
 }

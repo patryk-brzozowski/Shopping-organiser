@@ -3,6 +3,8 @@ package pl.patrykbrzozowski.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Data
@@ -15,9 +17,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true, length = 60)
+    @NotNull
     private String userName;
+    @Column(nullable = false, unique = true, length = 60)
+    @NotNull
     private String email;
     @Column(nullable = false, unique = true, length = 60)
+    @NotNull
+    @Size(min = 6)
     private String password;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

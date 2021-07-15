@@ -18,8 +18,8 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
     <div class="position-relative form-group">
-    <label for="firstName">User name</label>
-    <input class="form-control" type="text" id="firstName" name="userName" placeholder="User name" required="required" autofocus="autofocus">
+    <label for="userName">User name</label>
+    <input class="form-control" type="text" id="userName" name="userName" placeholder="User name" required="required" autofocus="autofocus">
     </div>
 
     <div class="position-relative form-group">
@@ -42,8 +42,8 @@
     <input class="btn-shadow mr-3 btn btn-success btn-block" type="submit" value="Sign up"/>
     </div>
 
-    <form:errors path="name" />
-    <form:errors path="username" />
+    <form:errors path="userName" />
+    <form:errors path="email" />
     <form:errors path="password" />
     <form:errors path="confirm_password" />
 

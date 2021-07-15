@@ -8,6 +8,7 @@ import pl.patrykbrzozowski.model.User;
 import pl.patrykbrzozowski.model.dto.RegisterDto;
 import pl.patrykbrzozowski.repository.RoleRepository;
 import pl.patrykbrzozowski.repository.UserRepository;
+import pl.patrykbrzozowski.security.CurrentUser;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,11 +31,22 @@ public class UserServiceImpl implements UserService {
     public User findByUserName(String username) {
         return userRepository.findByUserName(username);
     }
+
     @Override
-    public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByName("ROLE_USER");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void update(User user, CurrentUser currentUser) {
+        User dbUser = currentUser.getUser();
+        dbUser.setUserName(user.getUserName());
+        dbUser.setEmail(user.getEmail());
+
+        user.setId(dbUser.getId());
+        user.setPassword(dbUser.getPassword());
+        user.setRoles(dbUser.getRoles());
+
         userRepository.save(user);
     }
 

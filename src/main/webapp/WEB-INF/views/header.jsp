@@ -74,10 +74,10 @@
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left  ml-3 header-user-info text-light">
                                         <div class="widget-subheading">
-                                            Welcome again,
+                                            Hello again,
                                         </div>
                                         <div class="widget-heading">
-                                            <sec:authentication property="principal.username"/>
+                                            <sec:authentication property="principal.user.userName"/>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                         </div>
                     </li>
                     <li class="dropdown nav-item">
-                        <a href="javascript:void(0);" class="nav-link text-light">
+                        <a href='<c:url value="/home/settings"/>' class="nav-link text-light">
                             <i class="nav-link-icon fa fa-cog"></i>
                             Settings
                         </a>
@@ -148,7 +148,7 @@
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Shopping lists</li>
                 <li>
-                    <a href="index.html">
+                    <a href='<c:url value="/home"/>'>
                         <i class="metismenu-icon pe-7s-menu"></i>
                         Your lists
                     </a>
