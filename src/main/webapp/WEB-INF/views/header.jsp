@@ -16,9 +16,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
+    <title>Shopping organiser</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="description" content="This is Shopping organiser webpage.">
     <meta name="msapplication-tap-highlight" content="no">
     <!--
     =========================================================
@@ -63,7 +63,18 @@
                     </button>
                 </span>
         </div>    <div class="app-header__content">
+
         <div class="app-header-left">
+            <sec:authorize access="isAuthenticated()">
+                <ul class="header-menu nav">
+                    <li class="dropdown nav-item">
+                        <a href='<c:url value="/home"/>' class="nav-link text-dark badge badge-light">
+                            <i class="nav-link-icon fa pe-7s-home"></i>
+                            Go to home page
+                        </a>
+                    </li>
+                </ul>
+            </sec:authorize>
      </div>
         <div class="app-header-right">
             <sec:authorize access="isAuthenticated()">

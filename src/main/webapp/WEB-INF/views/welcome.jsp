@@ -31,6 +31,18 @@
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
+             <c:if test="${not empty failed}">
+                 <div class="text-danger">${failed}</div>
+             </c:if>
+             <c:if test="${not empty delete}">
+                 <div class="text-danger">${delete}</div>
+             </c:if>
+             <c:if test="${not empty logout}">
+                 <div>${logout}</div>
+             </c:if>
+             <c:if test="${not empty register}">
+                 <div class="text-success">${register}</div>
+             </c:if>
          <br/>
     <a class="btn-shadow mr-3 btn btn-success btn-block" href='<c:url value="/register"/>'>Sign up</a>
 

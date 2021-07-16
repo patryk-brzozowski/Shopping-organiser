@@ -2,7 +2,10 @@ package pl.patrykbrzozowski.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.patrykbrzozowski.exceptions.ConfirmationFailedException;
+import pl.patrykbrzozowski.exceptions.EmailAlreadyExistException;
 import pl.patrykbrzozowski.exceptions.RegisterFailedException;
+import pl.patrykbrzozowski.exceptions.UserAlreadyExistException;
 import pl.patrykbrzozowski.model.Role;
 import pl.patrykbrzozowski.model.User;
 import pl.patrykbrzozowski.model.dto.RegisterDto;
@@ -32,6 +35,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserName(username);
     }
 
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public void userExist (String username) throws UserAlreadyExistException {
+        if (findByUserName(username)!=null) throw new UserAlreadyExistException("");
+    }
+
+    @Override
+    public void emailExist (String email) throws EmailAlreadyExistException {
+        if (findUserByEmail(email)!=null) throw new EmailAlreadyExistException("");
+    }
+
     @Override
     public void save(User user) {
         userRepository.save(user);
@@ -51,6 +68,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updatePassword(RegisterDto dto, CurrentUser currentUser) throws ConfirmationFailedException {
+
+        if(!dto.getPassword().equals(dto.getConfirm_password()) || dto.getPassword()==null || dto.getPassword().isEmpty()
+                || dto.getConfirm_password()==null || dto.getConfirm_password().isEmpty()){
+            throw new ConfirmationFailedException("Password incorrect");
+        }
+        User dbUser = currentUser.getUser();
+        dbUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        userRepository.save(dbUser);
+    }
+
+    @Override
     public User registerUser(RegisterDto dto) throws RegisterFailedException {
         if(!dto.getPassword().equals(dto.getConfirm_password()) || dto.getPassword()==null || dto.getPassword().isEmpty()
                 || dto.getConfirm_password()==null || dto.getConfirm_password().isEmpty()){
@@ -60,5 +90,17 @@ public class UserServiceImpl implements UserService {
         User user = new User(dto.getUserName(),dto.getEmail(),passwordEncoder.encode(dto.getPassword()),new HashSet<Role>(Arrays.asList(userRole)));
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public void confirmPassword(User user, String password) throws ConfirmationFailedException {
+        if(!passwordEncoder.matches(password, user.getPassword())) {
+            throw new ConfirmationFailedException("Password incorrect");
+        }
+    }
+
+    @Override
+    public void delete(User user) {
+        userRepository.delete(user);
     }
 }

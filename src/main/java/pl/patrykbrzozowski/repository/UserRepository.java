@@ -6,4 +6,6 @@ import pl.patrykbrzozowski.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUserName (String userName);
+
+    User findUserByEmail (String email);
 }

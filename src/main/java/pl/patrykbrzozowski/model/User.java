@@ -3,6 +3,7 @@ package pl.patrykbrzozowski.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -16,11 +17,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true, length = 60)
+    @Column(nullable = false, unique = true, length = 25)
     @NotNull
+    @Size(min = 3, max = 25)
     private String userName;
     @Column(nullable = false, unique = true, length = 60)
     @NotNull
+    @Email
     private String email;
     @Column(nullable = false, unique = true, length = 60)
     @NotNull
