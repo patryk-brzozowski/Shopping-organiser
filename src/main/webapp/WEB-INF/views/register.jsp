@@ -57,6 +57,10 @@
 
 </form:form>
 
+        <div class="position-relative form-group">
+            <a class="btn-shadow mr-3 btn btn-primary btn-block" href="/"> Go back </a>
+        </div>
+
     </div>
     </div>
     </div>

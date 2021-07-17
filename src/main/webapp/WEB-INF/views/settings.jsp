@@ -16,7 +16,7 @@
     <div class="main-card mb-3 card">
       <div class="card-body">
         <h2 class="card-title text-center"> User details</h2>
-<form:form method="post" modelAttribute="user">
+<form:form method="post" modelAttribute="user" action="/home/settings">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
   <div class="position-relative form-group">

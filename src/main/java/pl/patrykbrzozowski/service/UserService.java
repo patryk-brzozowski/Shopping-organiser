@@ -13,6 +13,7 @@ public interface UserService {
     User findByUserName(String name);
 
     User findUserByEmail(String email);
+
     void userExist (String username) throws UserAlreadyExistException;
 
     void emailExist (String email) throws EmailAlreadyExistException;

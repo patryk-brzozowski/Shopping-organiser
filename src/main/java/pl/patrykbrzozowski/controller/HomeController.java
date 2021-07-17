@@ -5,13 +5,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.patrykbrzozowski.model.ListOfProducts;
 import pl.patrykbrzozowski.model.User;
 import pl.patrykbrzozowski.security.CurrentUser;
+import pl.patrykbrzozowski.service.ListOfProductsService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class HomeController {
+
+    private final ListOfProductsService listOfProductsService;
+
+    public HomeController (ListOfProductsService listOfProductsService) {
+        this.listOfProductsService = listOfProductsService;
+    }
 
     @GetMapping("/")
     public String welcome(Model model, @RequestParam(required = false) String failed, @RequestParam(required = false) String delete,
@@ -35,6 +44,10 @@ public class HomeController {
         return "welcome"; }
 
     @GetMapping("/home")
-    public String home() { return "home"; }
+    public String home(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        List<ListOfProducts> listOfProducts = listOfProductsService.getAllUserLists(currentUser.getUser());
+        model.addAttribute("userLists", listOfProducts);
+
+        return "home"; }
 
 }
