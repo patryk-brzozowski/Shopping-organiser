@@ -22,10 +22,28 @@ public class ListOfProductsServiceImpl implements ListOfProductsService {
     }
 
     @Override
+    public ListOfProducts getListById(long id) {
+        return listOfProductsRepository.findListOfProductsById(id);
+    }
+
+    @Override
     public void addNewList (User user) {
         ListOfProducts list = new ListOfProducts();
         list.setUser(user);
         list.setTitle("Untitled");
+
+        listOfProductsRepository.save(list);
+    }
+
+    @Override
+    public void deleteList(long listId) {
+        listOfProductsRepository.deleteById(listId);
+    }
+
+    @Override
+    public void changeTitle(long listId, String title) {
+        ListOfProducts list = listOfProductsRepository.findListOfProductsById(listId);
+        list.setTitle(title);
 
         listOfProductsRepository.save(list);
     }

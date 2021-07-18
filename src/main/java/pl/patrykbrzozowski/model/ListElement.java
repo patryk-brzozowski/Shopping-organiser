@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -17,6 +18,10 @@ public class ListElement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     String description;
+    @Min(0)
+    double quantity;
+    @Min(0)
+    double price;
 
     @ManyToOne
     @JoinColumn(name = "list_id")

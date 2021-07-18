@@ -22,10 +22,9 @@
                 <c:forEach items="${list.elements}" var="element">
                 <li class="list-group-item-action list-group-item">${element.description}
                     <form class="float-right" method="post" action="/home/deleteproduct">
-<%--                    <a href="/home/deleteproduct"><i class="pe-7s-close float-lg-right"></i> </a>--%>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input type="hidden" name="productId" value="${element.id}">
-                        <button class="btn" type="submit"> <i class="pe-7s-close"></i> </button>
+                        <button class="btn center-elem" type="submit"> <i class="pe-7s-close"></i> </button>
                     </form>
                 </li>
                 </c:forEach>
@@ -34,12 +33,23 @@
                 <form method="post" action="/home/addproduct">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input type="hidden" name="listId" value="${list.id}">
-                    <div class="position-relative form-group">
+                    <div class="position-relative input-group">
                         <input class="form-control" type="text" name="description" placeholder="Add new product" required="required">
-                        <input class="btn-shadow mr-3 btn btn-primary" type="submit" value="Add">
+                        <div class="input-group-append">
+                            <input class="btn-shadow mr-3 btn btn-primary" type="submit" value="Add">
+                        </div>
                     </div>
                 </form>
+
+                <br/>
+
+                <input type="hidden" name="listId" value="${list.id}">
+                <div class="center-svg  form-group">
+                    <a class="btn-shadow mr-3 btn btn-success btn-block" href="/home/details?id=${list.id}">Details</a>
+                </div>
+
             </div>
+
         </div>
     </div>
     <c:if test="${status.index % 2 != 0}">

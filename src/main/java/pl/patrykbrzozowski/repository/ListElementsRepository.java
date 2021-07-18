@@ -9,4 +9,6 @@ import java.util.List;
 public interface ListElementsRepository extends JpaRepository<ListElement, Long> {
 
     List<ListElement> findByListOfProducts_Id(long id);
+
+    void removeAllByListOfProducts_Id(long listId);
 }

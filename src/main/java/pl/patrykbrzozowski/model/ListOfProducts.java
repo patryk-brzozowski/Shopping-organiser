@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -21,9 +21,21 @@ public class ListOfProducts {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotNull
     private User user;
 
     @OneToMany(mappedBy = "listOfProducts")
     private List<ListElement> elements;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ListOfProducts)) return false;
+        ListOfProducts list = (ListOfProducts) o;
+        return id.equals(list.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

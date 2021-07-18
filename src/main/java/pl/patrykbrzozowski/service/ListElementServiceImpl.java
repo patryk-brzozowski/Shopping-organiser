@@ -5,6 +5,7 @@ import pl.patrykbrzozowski.model.ListElement;
 import pl.patrykbrzozowski.repository.ListElementsRepository;
 import pl.patrykbrzozowski.repository.ListOfProductsRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -35,5 +36,11 @@ public class ListElementServiceImpl implements ListElementService {
     @Override
     public void deleteProduct(long productId) {
         listElementsRepository.deleteById(productId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllProductsByList(long listId) {
+        listElementsRepository.removeAllByListOfProducts_Id(listId);
     }
 }
