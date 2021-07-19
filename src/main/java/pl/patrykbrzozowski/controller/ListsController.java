@@ -4,16 +4,21 @@ package pl.patrykbrzozowski.controller;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import pl.patrykbrzozowski.exceptions.EmailAlreadyExistException;
+import pl.patrykbrzozowski.exceptions.RegisterFailedException;
+import pl.patrykbrzozowski.exceptions.UserAlreadyExistException;
+import pl.patrykbrzozowski.model.ListElement;
 import pl.patrykbrzozowski.model.ListOfProducts;
+import pl.patrykbrzozowski.model.User;
+import pl.patrykbrzozowski.model.dto.RegisterDto;
 import pl.patrykbrzozowski.security.CurrentUser;
 import pl.patrykbrzozowski.service.ListElementService;
 import pl.patrykbrzozowski.service.ListOfProductsService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -69,6 +74,36 @@ public class ListsController {
 
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
+    }
+
+    @PostMapping("/editproducts")
+    public String editProduct(@Valid ListElement element, BindingResult result,  HttpServletRequest request) {
+        String referer = request.getHeader("Referer");
+
+        if(!result.hasErrors() ){
+            listElementService.updateProduct(element);
+                return "redirect:" + referer;
+        }
+
+        return "redirect:" + referer;
+    }
+
+    @GetMapping("/editproducts")
+    String editProducts (@AuthenticationPrincipal CurrentUser currentUser, @RequestParam long id, Model model) {
+        ListOfProducts list = listOfProductsService.getListById(id);
+        List<ListOfProducts> userList = listOfProductsService.getAllUserLists(currentUser.getUser());
+
+        if (!userList.contains(list)) {
+            return "redirect:/home";
+        }
+
+        model.addAttribute("list", listOfProductsService.getListById(id));
+        List<ListElement> listOfProducts = list.getElements();
+        for (int i = 0; i < listOfProducts.size(); i++) {
+            model.addAttribute("product"+i , listOfProducts.get(i));
+        }
+
+        return "productedition";
     }
 
     @PostMapping("/deleteproduct")

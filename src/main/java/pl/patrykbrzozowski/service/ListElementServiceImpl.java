@@ -34,6 +34,12 @@ public class ListElementServiceImpl implements ListElementService {
     }
 
     @Override
+    public void updateProduct(ListElement element) {
+
+        listElementsRepository.save(element);
+    }
+
+    @Override
     public void deleteProduct(long productId) {
         listElementsRepository.deleteById(productId);
     }

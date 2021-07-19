@@ -11,6 +11,8 @@ public interface ListElementService {
 
     void addNewProduct (long listId, String description);
 
+    void updateProduct(ListElement element);
+
     void deleteProduct(long productId);
 
     void deleteAllProductsByList(long listId);

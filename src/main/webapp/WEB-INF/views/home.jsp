@@ -43,7 +43,6 @@
 
                 <br/>
 
-                <input type="hidden" name="listId" value="${list.id}">
                 <div class="center-svg  form-group">
                     <a class="btn-shadow mr-3 btn btn-success btn-block" href="/home/details?id=${list.id}">Details</a>
                 </div>
