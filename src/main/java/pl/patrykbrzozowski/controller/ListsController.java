@@ -38,6 +38,10 @@ public class ListsController {
     String deleteList (@RequestParam long listId, HttpServletRequest request) {
         listOfProductsService.deleteList(listId);
 
+        String referer = request.getHeader("Referer");
+        if (referer.contains("history")) {
+            return "redirect:/home/history";
+        }
         return "redirect:/home";
     }
 
@@ -68,6 +72,11 @@ public class ListsController {
         listElementService.addNewProduct(listId, description);
 
         String referer = request.getHeader("Referer");
+        if(referer.contains("&edition=success")) {
+            referer = referer.replaceFirst("&edition=success", "");
+        } else if (referer.contains("&edition=failed")) {
+            referer = referer.replaceFirst("&edition=failed", "");
+        }
         if(referer.contains("?closed=true")) {
             referer = referer.replaceFirst("\\?closed=true", "");
         }

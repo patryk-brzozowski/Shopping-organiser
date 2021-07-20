@@ -104,5 +104,11 @@
         </div>
     </div>
 </div>
+<div class="center-elem center-svg">
+    <a href='<c:out value="/home"/>'>
+        <button type="button" class="btn-shadow mr-3 btn btn-primary" ><i class="pe-7s-back"></i> Go back</button>
+    </a>
+
+</div>
 
 <%@ include file="footer.jsp" %>

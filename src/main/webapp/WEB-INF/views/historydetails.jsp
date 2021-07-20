@@ -109,6 +109,26 @@
       </div>
     </div>
   </div>
+  <div class="col-md-6 col-xl-4">
+    <div class="card mb-3 widget-content bg-arielle-smile">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Total price:</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white">
+            <span>${totalPrice}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="center-elem center-svg">
+  <a href='<c:out value="/home/history"/>'>
+    <button type="button" class="btn-shadow mr-3 btn btn-primary" ><i class="pe-7s-back"></i> Go back</button>
+  </a>
 </div>
 
 <%@ include file="footer.jsp" %>

@@ -1,10 +1,13 @@
 package pl.patrykbrzozowski.service;
 
 import org.springframework.stereotype.Service;
+import pl.patrykbrzozowski.model.ListElement;
 import pl.patrykbrzozowski.model.ListOfProducts;
 import pl.patrykbrzozowski.model.User;
 import pl.patrykbrzozowski.repository.ListOfProductsRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -61,5 +64,18 @@ public class ListOfProductsServiceImpl implements ListOfProductsService {
         list.setDate(LocalDate.parse(date));
 
         listOfProductsRepository.save(list);
+    }
+
+    @Override
+    public BigDecimal calculatePrice(List<ListOfProducts> listOfProducts) {
+        double totalPrice = 0;
+        for(ListOfProducts list: listOfProducts){
+            totalPrice += list.getElements().stream()
+                    .mapToDouble((ListElement::getPrice))
+                    .sum();
+        }
+        BigDecimal roundedTotalPrice = BigDecimal.valueOf(totalPrice);
+        roundedTotalPrice = roundedTotalPrice.setScale(2, RoundingMode.HALF_UP);
+        return roundedTotalPrice;
     }
 }

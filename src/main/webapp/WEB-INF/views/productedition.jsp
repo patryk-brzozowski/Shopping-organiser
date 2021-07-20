@@ -79,9 +79,16 @@
                     </div>
                 </form>
                 <br/>
+                <c:if test="${list.active == 'yes'}">
                 <div class="position-relative form-group">
                     <a class="btn-shadow mr-3 btn btn-primary" href="/home/details?id=${list.id}"> Go back </a>
                 </div>
+                </c:if>
+                <c:if test="${list.active == 'no'}">
+                    <div class="position-relative form-group">
+                        <a class="btn-shadow mr-3 btn btn-primary" href="/home/historydetails?id=${list.id}"> Go back </a>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>

@@ -24,7 +24,7 @@ public class ListElement {
     @Min(0)
     double quantity;
     @Min(0)
-    double price;
+    float price;
 
     @ManyToOne
     @JoinColumn(name = "list_id")
