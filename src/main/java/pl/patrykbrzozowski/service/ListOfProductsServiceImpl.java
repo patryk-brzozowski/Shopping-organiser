@@ -5,6 +5,7 @@ import pl.patrykbrzozowski.model.ListOfProducts;
 import pl.patrykbrzozowski.model.User;
 import pl.patrykbrzozowski.repository.ListOfProductsRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -31,8 +32,14 @@ public class ListOfProductsServiceImpl implements ListOfProductsService {
         ListOfProducts list = new ListOfProducts();
         list.setUser(user);
         list.setTitle("Untitled");
+        list.setActive("yes");
 
         listOfProductsRepository.save(list);
+    }
+
+    @Override
+    public void saveList(ListOfProducts listOfProducts) {
+        listOfProductsRepository.save(listOfProducts);
     }
 
     @Override
@@ -44,6 +51,14 @@ public class ListOfProductsServiceImpl implements ListOfProductsService {
     public void changeTitle(long listId, String title) {
         ListOfProducts list = listOfProductsRepository.findListOfProductsById(listId);
         list.setTitle(title);
+
+        listOfProductsRepository.save(list);
+    }
+
+    @Override
+    public void changeDate(long listId, String date) {
+        ListOfProducts list = listOfProductsRepository.findListOfProductsById(listId);
+        list.setDate(LocalDate.parse(date));
 
         listOfProductsRepository.save(list);
     }

@@ -3,6 +3,7 @@ package pl.patrykbrzozowski.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +25,10 @@ public class ListOfProducts {
 
     @OneToMany(mappedBy = "listOfProducts")
     private List<ListElement> elements;
+
+    private String active;
+
+    private LocalDate date;
 
     @Override
     public boolean equals(Object o) {

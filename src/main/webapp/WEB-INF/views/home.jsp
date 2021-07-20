@@ -10,6 +10,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="header.jsp" %>
 
+<c:if test="${not empty closed}">
+    <h3>${closed}</h3>
+</c:if>
+
 <c:forEach items="${userLists}" var="list" varStatus="status">
     <c:if test="${status.index % 2 == 0}">
     <div class="row">

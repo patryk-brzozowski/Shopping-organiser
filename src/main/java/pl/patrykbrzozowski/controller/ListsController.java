@@ -6,13 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.patrykbrzozowski.exceptions.EmailAlreadyExistException;
-import pl.patrykbrzozowski.exceptions.RegisterFailedException;
-import pl.patrykbrzozowski.exceptions.UserAlreadyExistException;
 import pl.patrykbrzozowski.model.ListElement;
 import pl.patrykbrzozowski.model.ListOfProducts;
-import pl.patrykbrzozowski.model.User;
-import pl.patrykbrzozowski.model.dto.RegisterDto;
 import pl.patrykbrzozowski.security.CurrentUser;
 import pl.patrykbrzozowski.service.ListElementService;
 import pl.patrykbrzozowski.service.ListOfProductsService;
@@ -40,7 +35,7 @@ public class ListsController {
     }
 
     @PostMapping("/deletelist")
-    String deleteList (@RequestParam long listId) {
+    String deleteList (@RequestParam long listId, HttpServletRequest request) {
         listOfProductsService.deleteList(listId);
 
         return "redirect:/home";
@@ -73,6 +68,9 @@ public class ListsController {
         listElementService.addNewProduct(listId, description);
 
         String referer = request.getHeader("Referer");
+        if(referer.contains("?closed=true")) {
+            referer = referer.replaceFirst("\\?closed=true", "");
+        }
         return "redirect:" + referer;
     }
 
@@ -80,16 +78,22 @@ public class ListsController {
     public String editProduct(@Valid ListElement element, BindingResult result,  HttpServletRequest request) {
         String referer = request.getHeader("Referer");
 
-        if(!result.hasErrors() ){
-            listElementService.updateProduct(element);
-                return "redirect:" + referer;
+        if(referer.contains("&edition=success")) {
+            referer = referer.replaceFirst("&edition=success", "");
+        } else if (referer.contains("&edition=failed")) {
+            referer = referer.replaceFirst("&edition=failed", "");
         }
 
-        return "redirect:" + referer;
+        if(!result.hasErrors() ){
+            listElementService.updateProduct(element);
+                return "redirect:" + referer + "&edition=success";
+        }
+
+        return "redirect:" + referer + "&edition=failed";
     }
 
     @GetMapping("/editproducts")
-    String editProducts (@AuthenticationPrincipal CurrentUser currentUser, @RequestParam long id, Model model) {
+    String editProducts (@AuthenticationPrincipal CurrentUser currentUser, @RequestParam long id, @RequestParam (required = false) String edition, Model model) {
         ListOfProducts list = listOfProductsService.getListById(id);
         List<ListOfProducts> userList = listOfProductsService.getAllUserLists(currentUser.getUser());
 
@@ -101,6 +105,12 @@ public class ListsController {
         List<ListElement> listOfProducts = list.getElements();
         for (int i = 0; i < listOfProducts.size(); i++) {
             model.addAttribute("product"+i , listOfProducts.get(i));
+        }
+
+        if (edition!=null && edition.equals("success")) {
+            model.addAttribute("success", "The row has been successfully edited!");
+        } else if (edition!=null && edition.equals("failed")) {
+            model.addAttribute("failed", "Failed to edit row. Please enter valid data.");
         }
 
         return "productedition";

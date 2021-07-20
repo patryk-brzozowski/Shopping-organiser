@@ -172,7 +172,7 @@
                 </li>
                 <li class="app-sidebar__heading">History</li>
                 <li>
-                    <a href="#">
+                    <a href='<c:url value="/home/history"/>'>
                         <i class="metismenu-icon pe-7s-note2"></i>
                         Your history
                     </a>

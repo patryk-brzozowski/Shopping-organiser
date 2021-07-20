@@ -72,7 +72,7 @@
                 <br/>
                 <form method="post" action="deleteallproducts">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-<%--                    <input type="hidden" name="listId" value="${list.id}">--%>
+                    <input type="hidden" name="listId" value="${list.id}">
                     <input class="btn-shadow mr-3 btn btn-danger btn-block" type="submit" value="Delete all products">
                 </form>
             </div>
@@ -83,7 +83,7 @@
         <div class="main-card mb-3 card">
             <div class="card-body">
                 <h2 class="card-title text-center"> Options for closing the list </h2>
-                <form method="post" action="NOT READY">
+                <form method="post" action="/home/addtohistory">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input type="hidden" name="listId" value="${list.id}">
                     <input class="btn-shadow mr-3 btn btn-primary btn-block" type="submit" value="Close the list and move to history">

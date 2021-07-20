@@ -13,8 +13,12 @@ public interface ListOfProductsService {
 
     void addNewList (User user);
 
+    void saveList(ListOfProducts listOfProducts);
+
     void deleteList(long listId);
 
     void changeTitle(long listId, String title);
+
+    void changeDate(long listId, String date);
 
 }

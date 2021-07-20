@@ -44,9 +44,14 @@ public class HomeController {
         return "welcome"; }
 
     @GetMapping("/home")
-    public String home(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+    public String home(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam(required = false) String closed, Model model) {
         List<ListOfProducts> listOfProducts = listOfProductsService.getAllUserLists(currentUser.getUser());
+        listOfProducts.removeIf(el-> el.getActive().equals("no"));
         model.addAttribute("userLists", listOfProducts);
+
+        if (closed!=null) {
+            model.addAttribute("closed", "The list was closed successfully!");
+        }
 
         return "home"; }
 

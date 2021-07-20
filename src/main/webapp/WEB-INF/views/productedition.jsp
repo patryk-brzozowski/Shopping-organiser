@@ -61,6 +61,12 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                <c:if test="${not empty failed}">
+                    <div class="text-danger">${failed}</div>
+                </c:if>
+                <c:if test="${not empty success}">
+                    <div class="text-success">${success}</div>
+                </c:if>
                 <br/>
                 <form method="post" action="/home/addproduct">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
