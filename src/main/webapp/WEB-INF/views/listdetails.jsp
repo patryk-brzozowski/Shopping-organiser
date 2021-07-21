@@ -89,7 +89,7 @@
                     <input class="btn-shadow mr-3 btn btn-primary btn-block" type="submit" value="Close the list and move to history">
                 </form>
                 <br/>
-                <form method="post" action="NOT READY">
+                <form method="post" action="/home/addtohistoryandsupplies">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input type="hidden" name="listId" value="${list.id}">
                     <input class="btn-shadow mr-3 btn btn-primary btn-block" type="submit" value="Close the list, move to history and add products to supplies">

@@ -19,4 +19,6 @@ public interface ListElementService {
     void deleteAllProductsByList(long listId);
 
     void addNewProductToSupplies(ListOfSupplies listOfSupplies, String description);
+
+    void addNewProductToSuppliesWithQuantity(ListOfSupplies listOfSupplies, String description, double quantity);
 }

@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.patrykbrzozowski.model.ListElement;
+import pl.patrykbrzozowski.model.ListOfProducts;
 import pl.patrykbrzozowski.model.ListOfSupplies;
 import pl.patrykbrzozowski.security.CurrentUser;
 import pl.patrykbrzozowski.service.ListElementService;
+import pl.patrykbrzozowski.service.ListOfProductsService;
 import pl.patrykbrzozowski.service.ListOfSuppliesService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -20,10 +23,13 @@ import java.util.List;
 public class SuppliesController {
     private final ListOfSuppliesService listOfSuppliesService;
     private final ListElementService listElementService;
+    private final ListOfProductsService listOfProductsService;
 
-    public SuppliesController (ListOfSuppliesService listOfSuppliesService, ListElementService listElementService) {
+    public SuppliesController (ListOfSuppliesService listOfSuppliesService, ListElementService listElementService
+    ,ListOfProductsService listOfProductsService) {
         this.listOfSuppliesService = listOfSuppliesService;
         this.listElementService = listElementService;
+        this.listOfProductsService = listOfProductsService;
     }
 
     @GetMapping("/supplies")
@@ -50,4 +56,33 @@ public class SuppliesController {
         listElementService.addNewProductToSupplies(listOfSupplies, description);
 
         return "redirect:/home/supplies"; }
+
+    @RequestMapping("/addtohistoryandsupplies")
+    String addToHistoryAndSupplies(@AuthenticationPrincipal CurrentUser currentUser, long listId) {
+        ListOfProducts listOfProducts = listOfProductsService.getListById(listId);
+        listOfProducts.setActive("no");
+        listOfProducts.setDate(LocalDate.now());
+
+        List <ListElement> listElements = listOfProducts.getElements();
+
+        ListOfSupplies listOfSupplies = listOfSuppliesService.getListOfSupplies(currentUser.getUser());
+        List <ListElement> listOfSuppliesElements = listOfSupplies.getElements();
+
+        for (ListElement element : listElements) {
+            if (listOfSuppliesElements.contains(element)) {
+                int index = listOfSuppliesElements.indexOf(element);
+                ListElement elementToUpdate = listOfSuppliesElements.get(index);
+                elementToUpdate.setQuantity(elementToUpdate.getQuantity() + element.getQuantity());
+
+                listOfSuppliesElements.set(index, elementToUpdate);
+                listOfSupplies.setElements(listOfSuppliesElements);
+            } else {
+                listElementService.addNewProductToSuppliesWithQuantity(listOfSupplies, element.getDescription(), element.getQuantity());
+            }
+        }
+
+        listOfProductsService.saveList(listOfProducts);
+        return "redirect:/home?closed=true";
+    }
+
 }

@@ -59,4 +59,14 @@ public class ListElementServiceImpl implements ListElementService {
 
         listElementsRepository.save(element);
     }
+
+    @Override
+    public void addNewProductToSuppliesWithQuantity(ListOfSupplies listOfSupplies, String description, double quantity) {
+        ListElement element = new ListElement();
+        element.setDescription(description);
+        element.setListOfSupplies(listOfSupplies);
+        element.setQuantity(quantity);
+
+        listElementsRepository.save(element);
+    }
 }

@@ -142,6 +142,9 @@ public class HistoryController {
             for (ListOfProducts list: listOfProducts) {
                 list.getElements().forEach(el -> shops.add(el.getShop()));
             }
+            if(shops.contains(null) && shops.contains("")) {
+                shops.remove(null);
+            }
         }
 
         return shops;

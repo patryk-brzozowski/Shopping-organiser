@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -33,4 +34,17 @@ public class ListElement {
     @ManyToOne
     @JoinColumn(name = "list_of_supplies_id")
     private ListOfSupplies listOfSupplies;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ListElement)) return false;
+        ListElement element = (ListElement) o;
+        return this.getDescription().equalsIgnoreCase(((ListElement) o).getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description);
+    }
 }
