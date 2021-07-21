@@ -180,7 +180,7 @@
                 </li>
                 <li class="app-sidebar__heading">Supplies</li>
                 <li>
-                    <a href="dashboard-boxes.html">
+                    <a href='<c:url value="/home/supplies"/>'>
                         <i class="metismenu-icon pe-7s-box2"></i>
                         Your supplies
                     </a>

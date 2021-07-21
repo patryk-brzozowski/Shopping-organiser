@@ -13,9 +13,11 @@ import pl.patrykbrzozowski.exceptions.ConfirmationFailedException;
 import pl.patrykbrzozowski.exceptions.EmailAlreadyExistException;
 import pl.patrykbrzozowski.exceptions.RegisterFailedException;
 import pl.patrykbrzozowski.exceptions.UserAlreadyExistException;
+import pl.patrykbrzozowski.model.ListOfSupplies;
 import pl.patrykbrzozowski.model.User;
 import pl.patrykbrzozowski.model.dto.RegisterDto;
 import pl.patrykbrzozowski.security.CurrentUser;
+import pl.patrykbrzozowski.service.ListOfSuppliesService;
 import pl.patrykbrzozowski.service.UserService;
 
 import javax.validation.Valid;
@@ -23,9 +25,11 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final ListOfSuppliesService listOfSuppliesService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ListOfSuppliesService listOfSuppliesService) {
         this.userService = userService;
+        this.listOfSuppliesService = listOfSuppliesService;
     }
 
 
@@ -69,6 +73,10 @@ public class UserController {
             }
 
             if(user!=null) {
+                ListOfSupplies listOfSupplies = new ListOfSupplies();
+                listOfSupplies.setUser(user);
+                listOfSuppliesService.saveList(listOfSupplies);
+
                 return "redirect:/?register=success";
             }
         }

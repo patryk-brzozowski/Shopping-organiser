@@ -66,17 +66,34 @@
             <div class="card-body">
                 <h2 class="card-title text-center"> ${list.title} </h2>
                 <h3 class="card-title text-center"> ${list.date} </h3>
-                <ul class="list-group">
+                <table class="mb-0 table">
+                    <thead>
+                    <tr>
+                        <th>Product name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Bought in</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     <c:forEach items="${list.elements}" var="element">
-                        <li class="list-group-item-action list-group-item">${element.description}
-                            <form class="float-right" method="post" action="/home/deleteproduct">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <input type="hidden" name="productId" value="${element.id}">
-                                <button class="btn center-elem" type="submit"> <i class="pe-7s-close"></i> </button>
-                            </form>
-                        </li>
+                        <tr>
+                            <td>
+                                    ${element.description}
+                            </td>
+                            <td>
+                                    ${element.quantity}
+                            </td>
+                            <td>
+                                    ${element.price}
+                            </td>
+                            <td>
+                                    ${element.shop}
+                            </td>
+                        </tr>
                     </c:forEach>
-                </ul>
+                    </tbody>
+                </table>
                 <br/>
                 <div class="center-svg  form-group">
                     <a class="btn-shadow mr-3 btn btn-success btn-block" href="/home/historydetails?id=${list.id}">Details</a>

@@ -78,4 +78,15 @@ public class ListOfProductsServiceImpl implements ListOfProductsService {
         roundedTotalPrice = roundedTotalPrice.setScale(2, RoundingMode.HALF_UP);
         return roundedTotalPrice;
     }
+
+    @Override
+    public List<ListOfProducts> sortListByDate(List<ListOfProducts> listOfProducts) {
+         listOfProducts.sort((l1, l2) -> {
+            if (l1.getDate() == null || l2.getDate() == null)
+                return 0;
+            return l1.getDate().compareTo(l2.getDate());
+        });
+
+         return listOfProducts;
+    }
 }

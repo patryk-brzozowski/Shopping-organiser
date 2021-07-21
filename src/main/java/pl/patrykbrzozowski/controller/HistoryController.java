@@ -4,7 +4,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.patrykbrzozowski.model.ListElement;
 import pl.patrykbrzozowski.model.ListOfProducts;
 import pl.patrykbrzozowski.security.CurrentUser;
 import pl.patrykbrzozowski.service.ListOfProductsService;
@@ -12,10 +11,7 @@ import pl.patrykbrzozowski.service.ListOfProductsService;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/home")
@@ -31,6 +27,8 @@ public class HistoryController {
     public String history(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
         List<ListOfProducts> listOfProducts = listOfProductsService.getAllUserLists(currentUser.getUser());
         listOfProducts.removeIf(el -> el.getActive().equals("yes"));
+
+        listOfProducts = listOfProductsService.sortListByDate(listOfProducts);
 
         BigDecimal roundedTotalPrice = listOfProductsService.calculatePrice(listOfProducts);
 
@@ -63,6 +61,8 @@ public class HistoryController {
                 }
             }
         }
+
+        listOfProducts = listOfProductsService.sortListByDate(listOfProducts);
 
         BigDecimal roundedTotalPrice = listOfProductsService.calculatePrice(listOfProducts);
 

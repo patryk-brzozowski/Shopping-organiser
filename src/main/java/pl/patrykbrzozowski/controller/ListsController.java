@@ -87,17 +87,25 @@ public class ListsController {
     public String editProduct(@Valid ListElement element, BindingResult result,  HttpServletRequest request) {
         String referer = request.getHeader("Referer");
 
-        if(referer.contains("&edition=success")) {
+        if(referer.contains("&edition=success") || referer.contains("?edition=success")) {
             referer = referer.replaceFirst("&edition=success", "");
-        } else if (referer.contains("&edition=failed")) {
+            referer = referer.replaceFirst("\\?edition=success", "");
+        } else if (referer.contains("&edition=failed") || referer.contains("?edition=failed")) {
             referer = referer.replaceFirst("&edition=failed", "");
+            referer = referer.replaceFirst("\\?edition=failed", "");
         }
 
         if(!result.hasErrors() ){
             listElementService.updateProduct(element);
+            if(!referer.contains("?") ){
+                return "redirect:" + referer + "?edition=success";
+            }
                 return "redirect:" + referer + "&edition=success";
         }
 
+        if(!referer.contains("?") ){
+            return "redirect:" + referer + "?edition=failed";
+        }
         return "redirect:" + referer + "&edition=failed";
     }
 

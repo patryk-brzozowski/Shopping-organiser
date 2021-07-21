@@ -24,4 +24,6 @@ public interface ListOfProductsService {
 
     BigDecimal calculatePrice(List<ListOfProducts> listOfProducts);
 
+    List<ListOfProducts> sortListByDate (List<ListOfProducts> listOfProducts);
+
 }

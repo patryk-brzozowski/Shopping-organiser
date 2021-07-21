@@ -2,6 +2,7 @@ package pl.patrykbrzozowski.service;
 
 import org.springframework.stereotype.Service;
 import pl.patrykbrzozowski.model.ListElement;
+import pl.patrykbrzozowski.model.ListOfSupplies;
 import pl.patrykbrzozowski.repository.ListElementsRepository;
 import pl.patrykbrzozowski.repository.ListOfProductsRepository;
 
@@ -48,5 +49,14 @@ public class ListElementServiceImpl implements ListElementService {
     @Transactional
     public void deleteAllProductsByList(long listId) {
         listElementsRepository.removeAllByListOfProducts_Id(listId);
+    }
+
+    @Override
+    public void addNewProductToSupplies(ListOfSupplies listOfSupplies, String description) {
+        ListElement element = new ListElement();
+        element.setDescription(description);
+        element.setListOfSupplies(listOfSupplies);
+
+        listElementsRepository.save(element);
     }
 }

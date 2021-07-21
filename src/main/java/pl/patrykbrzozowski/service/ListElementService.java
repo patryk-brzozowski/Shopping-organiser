@@ -2,6 +2,7 @@ package pl.patrykbrzozowski.service;
 
 import pl.patrykbrzozowski.model.ListElement;
 import pl.patrykbrzozowski.model.ListOfProducts;
+import pl.patrykbrzozowski.model.ListOfSupplies;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface ListElementService {
     void deleteProduct(long productId);
 
     void deleteAllProductsByList(long listId);
+
+    void addNewProductToSupplies(ListOfSupplies listOfSupplies, String description);
 }

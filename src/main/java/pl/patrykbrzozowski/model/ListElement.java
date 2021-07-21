@@ -28,6 +28,9 @@ public class ListElement {
 
     @ManyToOne
     @JoinColumn(name = "list_id")
-    @NotNull
     private ListOfProducts listOfProducts;
+
+    @ManyToOne
+    @JoinColumn(name = "list_of_supplies_id")
+    private ListOfSupplies listOfSupplies;
 }
